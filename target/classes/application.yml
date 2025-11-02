@@ -1,0 +1,22 @@
+server:
+  port: 9091
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/skill_exchange_db
+
+skill:
+  exchange:
+    app:
+      jwtSecret: ======================SkillExchange=JWT=Secret===========================
+      jwtExpirationMs: 86400000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/skill_exchange_test_db

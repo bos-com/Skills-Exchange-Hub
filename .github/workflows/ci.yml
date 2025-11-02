@@ -1,0 +1,106 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Run backend tests
+      run: ./gradlew test
+
+    - name: Upload backend test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: backend-test-results
+        path: build/reports/tests/test/
+
+  frontend-build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        npm ci
+
+    - name: Run frontend linting
+      run: |
+        cd frontend
+        npm run lint
+
+    - name: Run frontend build
+      run: |
+        cd frontend
+        npm run build
+
+    - name: Run frontend tests
+      run: |
+        cd frontend
+        npm test
+      continue-on-error: true  # Allow pipeline to continue even if tests fail for now
+
+  docker-build:
+    needs: [backend-build-and-test, frontend-build-and-test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      if: github.ref == 'refs/heads/main'
+
+    - name: Build and push backend Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: ${{ github.ref == 'refs/heads/main' }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/skill-exchange-backend:latest
+      if: github.ref == 'refs/heads/main'
+
+    - name: Build and push frontend Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./frontend
+        file: ./frontend/Dockerfile
+        push: ${{ github.ref == 'refs/heads/main' }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/skill-exchange-frontend:latest
+      if: github.ref == 'refs/heads/main'

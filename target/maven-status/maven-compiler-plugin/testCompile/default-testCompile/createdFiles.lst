@@ -1,0 +1,8 @@
+com\skillexchange\platform\service\ExchangeRequestServiceTest.class
+com\skillexchange\platform\controller\AuthControllerTest.class
+com\skillexchange\platform\UserRepositoryTest.class
+com\skillexchange\platform\service\ReviewServiceTest.class
+com\skillexchange\platform\service\UserServiceTest.class
+com\skillexchange\platform\security\jwt\JwtUtilsTest.class
+com\skillexchange\platform\service\MatchmakingServiceTest.class
+com\skillexchange\platform\service\CertificateServiceTest.class

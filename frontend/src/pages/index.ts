@@ -1,0 +1,10 @@
+export { default as Home } from './Home.tsx';
+export { default as Login } from './Login.tsx';
+export { default as Register } from './Register.tsx';
+export { default as Dashboard } from './Dashboard.tsx';
+export { default as Profile } from './Profile.tsx';
+export { default as Matches } from './Matches.tsx';
+export { default as Chat } from './Chat.tsx';
+export { default as Projects } from './Projects.tsx';
+export { default as UniversityDashboard } from './UniversityDashboard.tsx';
+export { default as Admin } from './Admin.tsx';

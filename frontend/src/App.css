@@ -1,0 +1,351 @@
+@import './components/components.css';
+
+:root {
+  --primary-color: #8B5E3C; /* brown */
+  --accent-color: #D4A373; /* tan accent */
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --border-color: #333333;
+  --hover-glow: rgba(139, 94, 60, 0.35);
+}
+
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(30, 30, 30, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  padding: 0.5rem 2rem;
+  background-color: rgba(30, 30, 30, 0.98);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.nav-brand a {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.nav-brand a:hover {
+  color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+.nav-brand a::before {
+  content: "🔁";
+  font-size: 2rem;
+}
+
+.nav-search {
+  flex: 1;
+  max-width: 720px;
+  margin: 0 2rem;
+}
+
+.nav-search:focus-within {
+  max-width: 840px;
+  transition: max-width 0.25s ease;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(30, 30, 30, 0.98);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+  z-index: 1100;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: rgba(88, 101, 242, 0.12);
+  color: var(--primary-color);
+}
+
+.nav-links li a {
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-links li a:hover::after {
+  width: 70%;
+}
+
+.nav-links li a:hover {
+  color: var(--primary-color);
+  background-color: rgba(88, 101, 242, 0.1);
+}
+
+.nav-links li button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.nav-links li button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-links li button:hover::after {
+  width: 70%;
+}
+
+.nav-links li button:hover {
+  color: var(--primary-color);
+  background-color: rgba(88, 101, 242, 0.1);
+}
+
+/* Mobile menu */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background-color: rgba(88, 101, 242, 0.1);
+  color: var(--primary-color);
+}
+
+.main-content {
+  padding: 0;
+  min-height: calc(100vh - 80px);
+}
+
+/* General Page Styles */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Logo Styles */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em var(--hover-glow));
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em var(--accent-color));
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .nav-search {
+    max-width: 360px;
+  }
+  
+  .nav-links li a, .nav-links li button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    padding: 1rem;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: rgba(30, 30, 30, 0.98);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-search {
+    order: 3;
+    max-width: 100%;
+    margin: 1rem 0 0 0;
+    width: 100%;
+  }
+  
+  .nav-search .search-form {
+    max-width: 100%;
+  }
+  
+  .nav-brand a {
+    font-size: 1.5rem;
+  }
+  
+  .main-content {
+    padding: 0;
+  }
+  
+  .page {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.8rem;
+  }
+  
+  .nav-brand a {
+    font-size: 1.3rem;
+  }
+  
+  .nav-brand a::before {
+    font-size: 1.5rem;
+  }
+}
